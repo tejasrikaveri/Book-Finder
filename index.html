@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #results {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .book {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book Finder</h1>
+    <input type="text" id="search" placeholder="Enter book title...">
+    <button onclick="searchBooks()">Search</button>
+    <div id="results"></div>
+
+    <script>
+        function searchBooks() {
+            let query = document.getElementById('search').value;
+            let url = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    data.items.forEach(book => {
+                        let bookInfo = book.volumeInfo;
+                        let bookElement = document.createElement('div');
+                        bookElement.classList.add('book');
+                        bookElement.innerHTML = `
+                            <h3>${bookInfo.title}</h3>
+                            <p>Author: ${bookInfo.authors ? bookInfo.authors.join(', ') : 'Unknown'}</p>
+                            <img src="${bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : 'https://via.placeholder.com/150'}" alt="Book Cover">
+                        `;
+                        resultsDiv.appendChild(bookElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    </script>
+</body>
+</html>
