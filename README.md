@@ -13,7 +13,7 @@ A simple web app to search for books using the Google Books API.
 3. View the results below.
 
 ## Deployment
-The project is hosted on Netlify. You can access it here:  https://tejasrikaveri.github.io/Book-Finder/
+The project is hosted on Github itself. You can access it here:  https://tejasrikaveri.github.io/Book-Finder/
 
 ## Tech Stack
 - HTML
